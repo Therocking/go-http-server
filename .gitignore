@@ -1,0 +1,7 @@
+.vscode
+.env
+
+# Executables
+go-http
+*.exe
+*.cache
