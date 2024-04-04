@@ -1,20 +1,13 @@
 package services
 
 import (
-	"database/sql"
-	"fmt"
 
 	"githup.com/Therocking/go-http/models"
 	"githup.com/Therocking/go-http/repositories"
 )
 
-var usersList []models.User = []models.User{}
-
 func GetAllUsers() ([]models.User, error) {
-	users, err := repositories.GetAllUsers()
-	if err != nil {
-		return []models.User{}, err
-	}
+	users := repositories.GetAllUsers()
 
 	return users, nil
 }
@@ -22,33 +15,30 @@ func GetAllUsers() ([]models.User, error) {
 func GetUser(userId int64) (models.User, error) {
 	user, err := repositories.GetUser(userId)
 	if err != nil {
-		if err == sql.ErrNoRows {
-			return models.User{}, fmt.Errorf("models.User with id: %v was not found", userId)
-		}
+		
 		return models.User{}, err
 	}
 
 	return user, nil
 }
 
-func CreateUser(user models.User) (string, error) {
-	result, err := repositories.CreateUser(user)
+func CreateUser(user models.User) (models.User, error) {
+	user, err := repositories.CreateUser(user)
 	if err != nil {
-		return "", err
+		return models.User{}, err
 	}
-	id, _ := result.LastInsertId()
 
-	return fmt.Sprintf("models.User with id: %v was added", id), nil
+	return user, nil
 }
 
-func UpdateUser(user models.User) (models.User, error) {
-	resp, err := repositories.UpdateUser(user)
+func UpdateUser(id int64, user models.User) (models.User, error) {
+	user, err := repositories.UpdateUser(id, user)
 
 	if err != nil {
 		return models.User{}, err
 	}
 
-	return resp, nil
+	return user, nil
 }
 
 func DeleteUser(userId int64) (models.User, error) {

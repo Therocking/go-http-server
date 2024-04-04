@@ -1,9 +1,11 @@
 package models
 
+import "gorm.io/gorm"
+
 type Product struct {
-	Id          int
-	Name        string
-	Description string
-	Price       float64
-	CreatedBy   string
+  gorm.Model
+
+  Name        string  `gorm:"type:varchar(100);not null" json:"name"`
+  Description string  `gorm:"type:varchar(100);not null" json:"description"`
+  Price       float64 `gorm:"type:varchar(100);not null" json:"price"`
 }

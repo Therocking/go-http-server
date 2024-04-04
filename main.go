@@ -9,17 +9,20 @@ import (
 	"github.com/joho/godotenv"
 	"githup.com/Therocking/go-http/controllers"
 	"githup.com/Therocking/go-http/db"
+	"githup.com/Therocking/go-http/models"
 )
 
 func main() {
-	// env := os.Getenv("ENV")
-	// print(env)
-	err := godotenv.Load(".env")
+	envFile := ".env"
+
+	err := godotenv.Load(envFile)
 	if err != nil {
 		panic(err)
 	}
 
 	db.DbConnection()
+  db.Db.AutoMigrate(&models.User{})
+  db.Db.AutoMigrate(&models.Product{})
 
 	app := fiber.New()
 
@@ -28,7 +31,7 @@ func main() {
 
 	app.Use(logger.New())
 
-	app.Get("hello", controllers.HelloHandler)
+	app.Get("hello", HelloHandler)
 
 	/*Users routes*/
 	usersGroup.Get("", controllers.ShowUsers)
@@ -45,4 +48,9 @@ func main() {
 
 	port := fmt.Sprintf(":%s", os.Getenv("PORT"))
 	app.Listen(port)
+}
+
+func HelloHandler(c *fiber.Ctx) error {
+
+	return c.SendString("Hello World.")
 }

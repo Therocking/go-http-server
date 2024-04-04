@@ -1,7 +1,6 @@
 package services
 
 import (
-	"fmt"
 
 	"githup.com/Therocking/go-http/models"
 	"githup.com/Therocking/go-http/repositories"
@@ -25,16 +24,14 @@ func GetProduct(id int64) (models.Product, error) {
 	return product, nil
 }
 
-func CreateProduct(product models.Product) (string, error) {
+func CreateProduct(product models.Product) (models.Product, error) {
 
-	result, err := repositories.CreateProduct(product)
+	product, err := repositories.CreateProduct(product)
 	if err != nil {
-		return "", err
+		return models.Product{}, err
 	}
 
-	id, _ := result.LastInsertId()
-
-	return fmt.Sprintf("models.Product with id: %v was added", id), nil
+	return product, nil
 }
 
 func DeleteProduct(id int64) (models.Product, error) {

@@ -5,3 +5,7 @@
 go-http
 *.exe
 *.cache
+
+# air
+tmp/
+.air.toml

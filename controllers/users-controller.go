@@ -8,11 +8,6 @@ import (
 	"githup.com/Therocking/go-http/services"
 )
 
-func HelloHandler(c *fiber.Ctx) error {
-
-	return c.SendString("Hello World.")
-}
-
 func ShowUsers(c *fiber.Ctx) error {
 	users, err := services.GetAllUsers()
 	if err != nil {
@@ -65,9 +60,7 @@ func UpdateUser(c *fiber.Ctx) error {
 		return err
 	}
 
-	user.Id = userId
-
-	userUpdated, err := services.UpdateUser(user)
+	userUpdated, err := services.UpdateUser(userId, user)
 	if err != nil {
 		return c.Status(fiber.ErrBadRequest.Code).JSON(err)
 	}
