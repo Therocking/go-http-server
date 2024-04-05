@@ -2,7 +2,7 @@ version: '3'
 
 services:
   db:
-    container_name: post_db
+    container_name: db
     image: postgres:16.2-alpine3.19 
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -11,17 +11,10 @@ services:
     environment:
       - POSTGRES_PASSWORD=${DB_PASS}
     restart: always
-    # command: >
-    #  bash -c "
-    #  echo 'Waiting for PostgreSQL to start...' &&
-    #  until pg_isready -h localhost -p 5432 -U postgres; do
-    #    sleep 1;
-    #  done;
-    #  psql -U postgres -c 'CREATE DATABASE go_http;'"
-  
+
   server:
     container_name: go_s
-    image: go_http:fire
+    image: therocking/go_server:diamond
     # build:
     #   context: .
     #   dockerfile: ./Dockerfile

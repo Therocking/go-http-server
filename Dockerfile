@@ -1,14 +1,16 @@
 FROM golang:1.21.9-alpine3.19
 
 ENV ENV="prod"
-ENV PORT=2000
 EXPOSE 2000
 
 WORKDIR /app
 
-COPY go.mod main.go go.sum ./
+RUN apk add make
+
+COPY go.mod main.go ./
 COPY . .
+RUN go get
 
-RUN go build -o bin .
+RUN make build
 
-CMD ["./bin"]
+CMD ["make", "run"]
