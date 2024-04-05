@@ -1,0 +1,18 @@
+.git/
+.gitignore
+
+.env*
+
+tmp/
+.air.toml
+
+Dockerfile
+.dockerignore
+docker-compose.yml
+
+# Ignore all md file
+**/*.md
+
+init.sql
+
+go.sum

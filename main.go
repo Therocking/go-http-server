@@ -13,12 +13,14 @@ import (
 )
 
 func main() {
-	envFile := ".env"
+  if os.Getenv("ENV") == "dev" {
+    envFile := ".env"
 
-	err := godotenv.Load(envFile)
-	if err != nil {
-		panic(err)
-	}
+    err := godotenv.Load(envFile)
+    if err != nil {
+      panic(err)
+    }   
+  }
 
 	db.DbConnection()
   db.Db.AutoMigrate(&models.User{})
@@ -47,6 +49,9 @@ func main() {
 	productGroup.Delete(":id", controllers.DeleteProduct)
 
 	port := fmt.Sprintf(":%s", os.Getenv("PORT"))
+  if os.Getenv("ENV") == "prod" {
+    port = ":2000"
+  }
 	app.Listen(port)
 }
 
