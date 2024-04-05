@@ -1,4 +1,4 @@
-FROM golang:1.21.9-alpine3.19
+FROM --platform=$BUILDPLATFORM golang:1.21.9-alpine3.19
 
 ENV ENV="prod"
 EXPOSE 2000
