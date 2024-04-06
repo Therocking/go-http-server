@@ -1,13 +1,12 @@
 package services
 
 import (
-
 	"githup.com/Therocking/go-http/models"
 	"githup.com/Therocking/go-http/repositories"
 )
 
-func GetAllProducts() ([]models.Product, error) {
-	products, err := repositories.GetAllProducts()
+func GetAllProducts(limit, skip int) ([]models.Product, error) {
+	products, err := repositories.GetAllProducts(limit, skip)
 	if err != nil {
 		return []models.Product{}, err
 	}

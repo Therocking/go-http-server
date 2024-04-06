@@ -5,9 +5,9 @@ import (
 	"githup.com/Therocking/go-http/models"
 )
 
-func GetAllUsers() []models.User {
+func GetAllUsers(limit, skip int) []models.User {
 	var users []models.User
-	db.Db.Limit(10).Find(&users)
+	db.Db.Limit(limit).Offset(skip).Find(&users)
 
 	return users
 }
@@ -38,14 +38,16 @@ func CreateUser(user models.User) (models.User, error) {
 }
 
 func UpdateUser(id int64, user models.User) (models.User, error) {
-	userFound := db.Db.First(&user, id)
+	userFound := db.Db.First(models.User{}, id)
 	if err := userFound.Error; err != nil {
 		return models.User{}, err
 	}
 
-	db.Db.Model(&user).Association("Products").Find(&user.Products)
+	user.Username = "updated"
 
+	db.Db.Model(&user).Association("Products").Find(&user.Products)
 	db.Db.Save(&user)
+
 	return user, nil
 }
 

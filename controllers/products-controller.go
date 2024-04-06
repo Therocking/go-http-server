@@ -9,7 +9,10 @@ import (
 )
 
 func GetAllProducts(c *fiber.Ctx) error {
-	products, err := services.GetAllProducts()
+	limit, _ := strconv.Atoi(c.Query("limit"))
+	skip, _ := strconv.Atoi(c.Query("skip"))
+
+	products, err := services.GetAllProducts(limit, skip)
 	if err != nil {
 		return c.Status(fiber.ErrBadRequest.Code).JSON(err)
 	}

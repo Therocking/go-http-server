@@ -5,9 +5,9 @@ import (
 	"githup.com/Therocking/go-http/models"
 )
 
-func GetAllProducts() ([]models.Product, error) {
+func GetAllProducts(limit, skip int) ([]models.Product, error) {
 	var products []models.Product
-	db.Db.Limit(10).Find(&products)
+	db.Db.Limit(limit).Offset(skip).Find(&products)
 
 	return products, nil
 }

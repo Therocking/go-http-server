@@ -9,7 +9,10 @@ import (
 )
 
 func ShowUsers(c *fiber.Ctx) error {
-	users, err := services.GetAllUsers()
+	limit, _ := strconv.Atoi(c.Query("limit"))
+	skip, _ := strconv.Atoi(c.Query("skip"))
+
+	users, err := services.GetAllUsers(limit, skip)
 	if err != nil {
 		return c.Status(fiber.ErrBadRequest.Code).JSON(err)
 	}

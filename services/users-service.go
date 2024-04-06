@@ -1,13 +1,12 @@
 package services
 
 import (
-
 	"githup.com/Therocking/go-http/models"
 	"githup.com/Therocking/go-http/repositories"
 )
 
-func GetAllUsers() ([]models.User, error) {
-	users := repositories.GetAllUsers()
+func GetAllUsers(limit, skip int) ([]models.User, error) {
+	users := repositories.GetAllUsers(limit, skip)
 
 	return users, nil
 }
@@ -15,7 +14,7 @@ func GetAllUsers() ([]models.User, error) {
 func GetUser(userId int64) (models.User, error) {
 	user, err := repositories.GetUser(userId)
 	if err != nil {
-		
+
 		return models.User{}, err
 	}
 
