@@ -5,8 +5,8 @@ import (
 	"githup.com/Therocking/go-http/repositories"
 )
 
-func GetAllUsers(limit, skip int) ([]models.User, error) {
-	users := repositories.GetAllUsers(limit, skip)
+func GetAllUsers(filters models.Filters) ([]models.User, error) {
+	users := repositories.GetAllUsers(filters)
 
 	return users, nil
 }

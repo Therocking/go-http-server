@@ -5,9 +5,9 @@ import (
 	"githup.com/Therocking/go-http/models"
 )
 
-func GetAllUsers(limit, skip int) []models.User {
+func GetAllUsers(filters models.Filters) []models.User {
 	var users []models.User
-	db.Db.Limit(limit).Offset(skip).Find(&users)
+	db.Db.Limit(filters.Limit).Offset(filters.Skip).Find(&users)
 
 	return users
 }

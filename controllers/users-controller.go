@@ -11,8 +11,12 @@ import (
 func ShowUsers(c *fiber.Ctx) error {
 	limit, _ := strconv.Atoi(c.Query("limit"))
 	skip, _ := strconv.Atoi(c.Query("skip"))
+	filters := models.Filters{
+		Limit: limit,
+		Skip:  skip,
+	}
 
-	users, err := services.GetAllUsers(limit, skip)
+	users, err := services.GetAllUsers(filters)
 	if err != nil {
 		return c.Status(fiber.ErrBadRequest.Code).JSON(err)
 	}
