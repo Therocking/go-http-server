@@ -13,18 +13,18 @@ import (
 )
 
 func main() {
-  if os.Getenv("ENV") == "dev" {
-    envFile := ".env"
+	if os.Getenv("ENV") == "dev" {
+		envFile := ".env"
 
-    err := godotenv.Load(envFile)
-    if err != nil {
-      panic(err)
-    }   
-  }
+		err := godotenv.Load(envFile)
+		if err != nil {
+			panic(err)
+		}
+	}
 
 	db.DbConnection()
-  db.Db.AutoMigrate(&models.User{})
-  db.Db.AutoMigrate(&models.Product{})
+	db.Db.AutoMigrate(&models.User{})
+	db.Db.AutoMigrate(&models.Product{})
 
 	app := fiber.New()
 
@@ -33,6 +33,9 @@ func main() {
 
 	app.Use(logger.New())
 
+	app.Get("", func(c *fiber.Ctx) error {
+		return c.SendFile("./public/welcome.html")
+	})
 	app.Get("hello", HelloHandler)
 
 	/*Users routes*/
@@ -49,9 +52,9 @@ func main() {
 	productGroup.Delete(":id", controllers.DeleteProduct)
 
 	port := fmt.Sprintf(":%s", os.Getenv("PORT"))
-  if os.Getenv("ENV") == "prod" {
-    port = ":2000"
-  }
+	if os.Getenv("ENV") == "prod" {
+		port = ":2000"
+	}
 	app.Listen(port)
 }
 

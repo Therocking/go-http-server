@@ -14,7 +14,7 @@ services:
 
   server:
     container_name: go_s
-    image: therocking/go_server:diamond
+    image: therocking/go_server:wildmutt-alpine
     # build:
     #   context: .
     #   dockerfile: ./Dockerfile
