@@ -16,7 +16,7 @@ WORKDIR /app
 
 COPY --from=builder . ./
 
-RUN make build
+RUN go build -o ./bin/server
 
 # --
 
@@ -27,6 +27,6 @@ EXPOSE 2000
 
 WORKDIR /app
 
-COPY --from=build ./app/bin/server ./
+COPY --from=build ./app/bin ./
 
-CMD ["./server"]
+CMD ["./bin/server"]

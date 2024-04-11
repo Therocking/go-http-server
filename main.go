@@ -27,6 +27,7 @@ func main() {
 	db.Db.AutoMigrate(&models.Product{})
 
 	app := fiber.New()
+	app.Static("/", "./public")
 
 	usersGroup := app.Group("/users")
 	productGroup := app.Group("/products")
